@@ -18,7 +18,7 @@ if __name__ == '__main__':
                 ''')
 
     aneks = []
-    for i in range(1, 67):
+    for i in range(1, 69):
         r = requests.get(f'https://baneks.site/best/?p={i}')
         s = BeautifulSoup(r.text, 'html.parser')
         for a in tqdm(s.find_all('div', 'joke'), desc=f'Page {i}'):
@@ -31,7 +31,7 @@ if __name__ == '__main__':
                     res.append(str(item))
             res = "\n".join(res)
             if len(res) < 1024:
-                aneks.append((len(aneks) + 1, "\n".join(res)))
+                aneks.append((len(aneks) + 1, res))
 
     cur.executemany("INSERT INTO aneks values (?, ?)", aneks)
     con.commit()
